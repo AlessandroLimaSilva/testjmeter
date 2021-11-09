@@ -1,0 +1,82 @@
+JMeter -
+
+Ordem Natural (sequencial):
+	*Testadores (Samplers)
+	*Controladores Logicos (logic Controls)
+
+Ordem Hierarquica:	
+	*Demais Elementos.
+
+Como configurar uma gravação
+Instanciar um HTTPS(S) Test Script Recorder
+Em target controller selecionar o recording controller ex: Test Plan>minha gravação > recording controller
+Click em Play para gerar o certificado
+	
+	*Firefox
+		Click configuracoes.
+		Aba esquerda Click Privacidade e Segurança.
+		Certificados Click Ver Certificados.
+		Click Importar.
+		Navegar ate a pasta do jmeter/bin/ApacheJMeterTemporaryRootCA.crt.
+		Marcar Todas as opções click ok.
+		Ainda no Firefox/Configurações
+		Click na aba esquerda Geral.
+		Click Configurar Conexão.
+		Click Configuração Manual de Proxy.
+		Preencher Proxy HTTP com "Localhost" porta "8888"
+		Setar Usar este proxy tambem para HTTPS
+
+	*Chrome
+		Click Privacidade e segurança na aba esquerda.
+		Click Gerenciar Certificados.
+		Selecionar na aba superior Autoridades de certificação raiz confiaveis.
+		Click Importar selecionar o Certificado em jmeter/bin/ApacheJMeterTemporaryRootCA.crt.
+		Click em avançar ate finalizar.
+		Voltar a tela incial de configurações.
+		Click Avançado na aba esquerda.
+		Click Sistema na aba esquerda.
+		Click Abre as configurações de proxy do computador.
+		Click Proxy na aba esquerda.
+		Setar Ativado em Usar um servidor proxy.
+		Preencher Endereço com "http://localhost" Porta "8888".
+
+	Lembre-se Apos utilizar é necessario desfazer as configurações para poder utilizar o navegador	
+
+
+Configurando arquivo csv
+	Selecione o modulo CSV DATA SET CONFIG
+	Em filename coloque o endereço do csv, de preferencia colocar o csv junto ao .jmx
+	Pois assim nao é necessario passar o endereço do csv so o nome.
+
+
+
+Comandos no terminal
+ 
+ Sintaxe de comando
+  	*jmeter -n -t meu_teste.jmx
+
+Opções 
+-n: Essa opção seta o jmeter para rodar so no modo terminal.
+-t: informa que sera passado o plano de teste .jmx
+-l: Gera um arquivo de log da execução do teste
+-j: Gera um arquivo de log da execução do jmeter
+-r: opção para execução remota, usando os servidores especificados na propriedade "remote_hosts"
+-g: Arquivo csv file, para geração do dashboard
+-o: Pasta de saida onde sera gerado o dashboard. A Pasta não pode existir ou deve estar vazia.
+-H: proxy server hostname.
+-P: proxy server porta
+
+
+Exemplos:
+
+Executar o teste e salvar o log de resultados:
+jmeter -n -t meu_plano.jmx -l resultado.jtl
+
+Executar o teste e gerar a dashboard quando o teste finalizar:
+jmeter -n -t meu_plano.jmx -l resultado.jtl -e -o nomeMinhaDashboard
+
+Gerar dashboard a partir de um arquivo .jtl
+jmeter.bat -g nome.jtl -o nomePasta
+
+Executar um teste usando proxy:
+jmeter -n -t plano.jmx -l resultado.jtl -H my.proxy.server -P 8080
